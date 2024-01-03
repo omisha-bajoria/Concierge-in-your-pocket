@@ -55,7 +55,7 @@ def ai(prompt):
         print(f"Jarvis: {reply}")
         say(reply)
         # say(reply)
-    except UndefinedVariableError:
+    except UndefinedVariablesError:
         print("Jarvis: Sorry! Couldn't find anything related to your request.")
 
 
@@ -87,7 +87,7 @@ def chat(query):
 
 if __name__ == "__main__":
     print("Jarvis: Hello! I am Jarvis, your personal desktop assistant. How may I help you?")
-    # query = input("Jarvis: ")
+    query = input("Jarvis: ")
     # say(text="Hello! I am Jarvis, your personal desktop assistant. How may I help you?")
     
     # if "using artificial intelligence" in query or "using ai" in query:
