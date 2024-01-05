@@ -1,4 +1,4 @@
-"""This is a Personal Desktop AI Assistant."""
+"""This is a Personal AI Assistant to help with travelling."""
 
 
 print("Code began.")        # Indicates that code execution has started.
@@ -25,15 +25,21 @@ def takeCommand():
         r.adjust_for_ambient_noise(source=source, duration=0.6)
         r.energy_threshold=300
         r.pause_threshold = 1
-        audio = r.listen(source=source)
+        print("Before listening...")
+        audio = r.listen(source=source, timeout=5)
+        print("After listening...")
+
+
         try:
-            print("Recognizing...")
+            say("Recognizing...")
             query = r.recognize_google(audio_data=audio, language="en-in")
             query = query.lower()
             print(f"User: {query}")
             return query
-        except Exception:
-            return "Some error occurred!!! Apologies from Jarvis "
+        except sr.UnknownValueError:
+            return "Sorry! I didn't catch that. Could you please repeat?"
+        except sr.RequestError:
+            return "There seems to be an issue with the speech recognition service. Please try again later."
 
 
     
@@ -55,8 +61,8 @@ def ai(prompt):
         print(f"Jarvis: {reply}")
         say(reply)
         # say(reply)
-    except UndefinedVariablesError:
-        print("Jarvis: Sorry! Couldn't find anything related to your request.")
+    except NameError:
+        say("Sorry! Couldn't find anything related to your request.")
 
 
 chatStr=""
@@ -76,7 +82,7 @@ def chat(query):
         frequency_penalty=0,
         presence_penalty=0
     )
-    print(f"Jarvis: {response['choices'][0]['text']}")
+    print(f"{response['choices'][0]['text']}")
     say(text=response['choices'][0]['text'])
     chatStr += f"{response['choices'][0]['text']}\n"
     return response["choices"][0]["text"]
@@ -86,16 +92,17 @@ def chat(query):
 
 
 if __name__ == "__main__":
-    print("Jarvis: Hello! I am Jarvis, your personal desktop assistant. How may I help you?")
-    query = input("Jarvis: ")
-    # say(text="Hello! I am Jarvis, your personal desktop assistant. How may I help you?")
-    
-    # if "using artificial intelligence" in query or "using ai" in query:
-    ai(prompt=query)
+    say("Hello! I am Jarvis, your personal assistant for travelling. How may I help you?")
+    query = input("Please tell me your requirements: ")
 
-    # chat(query=query)
+    while True:
+        user_input = takeCommand()
+        
+        if user_input.lower() == 'exit':
+            print("Jarvis: Goodbye!")
+            break
 
-    # say(text=f"User: {query}")
+        ai(prompt=user_input)
 
 
 
