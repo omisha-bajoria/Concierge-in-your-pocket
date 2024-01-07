@@ -38,7 +38,7 @@ def takeCommand():
             query = r.recognize_google(audio_data=audio, language="en-in")
             query = query.lower()
             print(f"User: {query}")
-            chatStr += f"User: {query}\n"
+            # chatStr += f"User: {query}\n"
             return query
         except sr.UnknownValueError:
             return "Sorry! I didn't catch that. Could you please repeat?"
@@ -65,7 +65,7 @@ def ai(prompt):
         # reply=response["choices"][0]["text"]
         reply = response.choices[0].text
         print(f"Jarvis: {reply}")
-        say(reply)
+        # say(reply)
         chatStr += f"Concierge: {reply}\n"
         # say(reply)
     except NameError:
@@ -80,7 +80,7 @@ def chat(query1):
     # print(chatStr)
     query = input(f"User: ")
     openai.api_key=my_apikey
-    chatStr += f"User: {query}\nJarvis"
+    # chatStr += f"User: {query}\nJarvis"
     response = openai.Completion.create(
         model="text-davinci-003",
         prompt=chatStr,
@@ -104,7 +104,7 @@ if __name__ == "__main__":
     say(f"{temp_used_str}")
     # query = input("Please tell me your requirements: ")
     print("Please tell me your requirements: ")
-    chatStr += f"Concierge: {temp_used_str}\n"
+    # chatStr += f"Concierge: {temp_used_str}\n"
 
     while True:
         print("listening")
